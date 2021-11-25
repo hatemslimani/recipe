@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home/all"></ion-back-button>
+    </ion-buttons>
+    <h1 class="title ion-text-center" *ngIf="details">{{details.strCategory}}</h1>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container" *ngIf="details">
+    <div class="card-content">
+      <img src="{{details.strCategoryThumb}}" alt="" srcset="" width="100%" height="100%">
+      
+    </div>
+    <div class="about">
+      <h1>About</h1>
+      <p>{{details.strCategoryDescription}}</p>
+    </div>
+    <h1 class="list-header">Meals</h1>
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col size="6" *ngFor="let meals of listMeals">
+                    <div class="card" (click)="getDetails(meals.idMeal)">
+                        <ion-img [src]="meals.strMealThumb"></ion-img>
+                        <div class="card-content">
+                            <h3 class="title">{{meals.strMeal}}</h3>
+                            <ion-buttons slot="start">
+                                <ion-button>
+                                    <ion-icon slot="icon-only" name="heart"></ion-icon>
+                                </ion-button>
+                            </ion-buttons>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+      </div>
+</ion-content>
