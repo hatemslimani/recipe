@@ -1,0 +1,107 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-title class="text-bold">
+            <ion-text color="primary">Recipe</ion-text>Book
+        </ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchMeals()" placeholder="Search for recipes..." animated
+            class="custom-searchbar">
+        </ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!-- Loading Spinner -->
+    <div class="ion-text-center ion-padding" *ngIf="loading">
+        <ion-spinner></ion-spinner>
+        <p class="text-medium">Finding delicious recipes...</p>
+    </div>
+
+    <!-- Random Recipe of the Day -->
+    <div class="section-container" *ngIf="randomMeal">
+        <h2 class="section-title">
+            <ion-icon name="restaurant"></ion-icon>
+            Recipe of the Day
+        </h2>
+        <ion-card class="featured-card fade-in">
+            <div class="card-image-container">
+                <img [src]="randomMeal.strMealThumb" [alt]="randomMeal.strMeal" />
+                <div class="card-overlay">
+                    <ion-chip>
+                        <ion-icon name="location"></ion-icon>
+                        <ion-label>{{ randomMeal.strArea }}</ion-label>
+                    </ion-chip>
+                </div>
+            </div>
+            <ion-card-header>
+                <ion-card-title class="text-bold">{{ randomMeal.strMeal }}</ion-card-title>
+                <ion-card-subtitle>
+                    <ion-icon name="restaurant-outline"></ion-icon>
+                    {{ randomMeal.strCategory }}
+                </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <p class="recipe-description">{{ randomMeal.strInstructions | slice:0:150 }}...</p>
+                <ion-button expand="block" [routerLink]="['/meal', randomMeal.idMeal]" class="view-recipe-btn">
+                    <ion-icon name="book-outline" slot="start"></ion-icon>
+                    View Recipe
+                </ion-button>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+    <!-- Search Results -->
+    <div class="section-container" *ngIf="meals.length > 0">
+        <h2 class="section-title">
+            <ion-icon name="search"></ion-icon>
+            Search Results
+        </h2>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6" *ngFor="let meal of meals" class="fade-in">
+                    <ion-card class="recipe-card" [routerLink]="['/meal', meal.idMeal]">
+                        <div class="card-image-container">
+                            <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
+                            <div class="category-badge">
+                                {{ meal.strCategory }}
+                            </div>
+                        </div>
+                        <ion-card-header>
+                            <ion-card-title class="recipe-title">{{ meal.strMeal }}</ion-card-title>
+                        </ion-card-header>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+
+    <!-- Categories -->
+    <div class="section-container">
+        <h2 class="section-title">
+            <ion-icon name="grid"></ion-icon>
+            Categories
+        </h2>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6" *ngFor="let category of categories" class="fade-in">
+                    <ion-card class="category-card" [routerLink]="['/category', category.strCategory]">
+                        <div class="card-image-container">
+                            <img [src]="category.strCategoryThumb" [alt]="category.strCategory" />
+                            <div class="card-overlay gradient-overlay">
+                                <h3 class="category-title">{{ category.strCategory }}</h3>
+                            </div>
+                        </div>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+
+    <!-- FAB Button -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="refreshRandomMeal()" class="custom-fab">
+            <ion-icon name="shuffle"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-title class="text-bold">
+            <ion-text color="primary">My</ion-text> Favorites
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!-- Loading State -->
+    <div class="ion-text-center ion-padding" *ngIf="loading">
+        <ion-spinner></ion-spinner>
+        <p class="text-medium">Loading your favorite recipes...</p>
+    </div>
+
+    <!-- Favorites List -->
+    <div class="favorites-container" *ngIf="!loading && favoriteMeals.length > 0">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6" *ngFor="let meal of favoriteMeals" class="fade-in">
+                    <ion-card class="favorite-card" [routerLink]="['/meal', meal.idMeal]">
+                        <div class="image-container">
+                            <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
+                            <div class="overlay">
+                                <ion-button fill="clear" class="remove-btn" (click)="removeFavorite(meal, $event)">
+                                    <ion-icon name="heart" color="danger"></ion-icon>
+                                </ion-button>
+                            </div>
+                        </div>
+                        <ion-card-header>
+                            <ion-card-title class="meal-title">{{ meal.strMeal }}</ion-card-title>
+                            <ion-card-subtitle>
+                                <ion-chip class="category-chip">
+                                    <ion-icon name="restaurant"></ion-icon>
+                                    <ion-label>{{ meal.strCategory }}</ion-label>
+                                </ion-chip>
+                                <ion-chip class="area-chip">
+                                    <ion-icon name="location"></ion-icon>
+                                    <ion-label>{{ meal.strArea }}</ion-label>
+                                </ion-chip>
+                            </ion-card-subtitle>
+                        </ion-card-header>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state ion-text-center ion-padding" *ngIf="!loading && favoriteMeals.length === 0">
+        <ion-icon name="heart-outline" class="empty-icon"></ion-icon>
+        <h2>No Favorites Yet</h2>
+        <p>Start adding your favorite recipes!</p>
+        <ion-button routerLink="/explore" expand="block" class="explore-btn">
+            <ion-icon name="compass" slot="start"></ion-icon>
+            Explore Recipes
+        </ion-button>
+    </div>
+</ion-content>

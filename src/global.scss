@@ -24,3 +24,89 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+// Import Google Font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+// Global styles
+ion-content {
+    --background: var(--page-background);
+}
+
+// Card animations
+ion-card {
+    transition: transform 0.2s ease;
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+// Skeleton text animation
+.skeleton-text {
+    animation: shimmer 1.5s infinite linear;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.1));
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+// Custom classes
+.text-bold {
+    font-weight: 600;
+}
+
+.text-medium {
+    font-weight: 500;
+}
+
+.text-small {
+    font-size: 0.9em;
+}
+
+.text-center {
+    text-align: center;
+}
+
+// Image styles
+.rounded-image {
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+}
+
+// Custom chip styles
+ion-chip {
+    --background: rgba(var(--ion-color-primary-rgb), 0.1);
+    --color: var(--ion-color-primary);
+    font-weight: 500;
+}
+
+// Custom button styles
+ion-button {
+    --border-radius: 12px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+
+    &.button-solid {
+        --box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb), 0.2);
+    }
+}
+
+// Loading spinner
+ion-spinner {
+    --color: var(--ion-color-primary);
+    width: 48px;
+    height: 48px;
+}

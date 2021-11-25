@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ categoryName }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="loading" class="ion-text-center ion-padding">
+        <ion-spinner></ion-spinner>
+    </div>
+
+    <ion-grid *ngIf="!loading">
+        <ion-row>
+            <ion-col size="6" *ngFor="let meal of meals">
+                <ion-card [routerLink]="['/meal', meal.idMeal]">
+                    <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
+                    <ion-card-header>
+                        <ion-card-title class="ion-text-wrap">{{ meal.strMeal }}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div *ngIf="!loading && meals.length === 0" class="ion-text-center ion-padding">
+        <h2>No meals found in this category</h2>
+    </div>
+</ion-content>

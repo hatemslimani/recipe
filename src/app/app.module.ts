@@ -1,20 +1,26 @@
-import { NgModule  } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { CommonModule } from "@angular/common";
-import { AppComponent } from './app.component';
+import { IonicStorageModule } from '@ionic/storage-angular';
+
 import { AppRoutingModule } from './app-routing.module';
-import { AcceuilPageModule } from './pages/acceuil/acceuil.module';
-import { DetailsPageModule } from './pages/details/details.module';
-import { CategorieDetailsPageModule } from './pages/categorie-details/categorie-details.module';
+import { AppComponent } from './app.component';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,CommonModule,AcceuilPageModule,DetailsPageModule,CategorieDetailsPageModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
+    CommonModule
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

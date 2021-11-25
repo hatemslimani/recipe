@@ -1,0 +1,86 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ meal?.strMeal }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="toggleFavorite()">
+                <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="loading" class="ion-text-center ion-padding">
+        <ion-spinner></ion-spinner>
+    </div>
+
+    <div *ngIf="meal && !loading">
+        <!-- Hero Image -->
+        <div class="meal-image">
+            <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
+        </div>
+
+        <!-- Basic Info -->
+        <ion-card>
+            <ion-card-header>
+                <ion-card-subtitle>
+                    <ion-chip color="primary">
+                        <ion-label>{{ meal.strCategory }}</ion-label>
+                    </ion-chip>
+                    <ion-chip color="secondary">
+                        <ion-label>{{ meal.strArea }}</ion-label>
+                    </ion-chip>
+                </ion-card-subtitle>
+            </ion-card-header>
+        </ion-card>
+
+        <!-- Ingredients -->
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Ingredients</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <ion-item *ngFor="let ingredient of meal.ingredients">
+                        <ion-thumbnail slot="start">
+                            <img [src]="'https://www.themealdb.com/images/ingredients/' + ingredient.name + '-Small.png'"
+                                [alt]="ingredient.name" />
+                        </ion-thumbnail>
+                        <ion-label>
+                            <h2>{{ ingredient.name }}</h2>
+                            <p>{{ ingredient.measure }}</p>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+
+        <!-- Instructions -->
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Instructions</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p class="instructions">{{ meal.strInstructions }}</p>
+            </ion-card-content>
+        </ion-card>
+
+        <!-- Video Tutorial -->
+        <ion-card *ngIf="safeVideoUrl">
+            <ion-card-header>
+                <ion-card-title>Video Tutorial</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="video-container">
+                    <iframe [src]="safeVideoUrl" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>
